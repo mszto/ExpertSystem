@@ -16,10 +16,12 @@ abstract public class Parts {
         isScratch = scratch;
     }
 
-    abstract void doValuation();
+    abstract void doValuation(Car car);
 
     public Parts(){
-
+        painting=0;
+        workPrice=0;
+        partPrice=0;
     }
 
 }

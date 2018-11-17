@@ -4,22 +4,26 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import java.util.List;
 
 public class MoreDetails {
 
 
-    Parts part;
-    Pane secondPane;
-    Pane pane;
-    CheckBox scretchCheckBox, brokenCheckBox, deformetCheckBox;
-    Button closeButton, okButton;
-    Car car;
+    private Parts part;
+    private Pane secondPane;
+    private Pane pane;
+    private CheckBox scretchCheckBox, brokenCheckBox, deformetCheckBox;
+    private Button closeButton, okButton;
+    private Car car;
+    private String element;
+    private List<String> selectedParts;
     public MoreDetails() {
 
     }
 
     private void closeDetails() {
         closeButton.setOnAction(event -> {
+            secondPane.getChildren().clear();
             pane.getChildren().remove(secondPane);
             pane.getChildren().forEach(node -> {
                 node.setDisable(false);
@@ -46,8 +50,7 @@ public class MoreDetails {
     }
 
     private void bumperDetail(Pane pane) {
-        part = new Bumper();
-        ((Bumper) part).setFront(true);
+        pane.getChildren().remove(secondPane);
         scretchCheckBox = new CheckBox("prysowony");
         brokenCheckBox = new CheckBox("urwany/rozcięty");
         deformetCheckBox = new CheckBox("odkształcony");
@@ -72,29 +75,47 @@ public class MoreDetails {
             ((Bumper) part).setBroken(brokenCheckBox.isSelected());
             ((Bumper) part).setScrachet(scretchCheckBox.isSelected());
             ((Bumper) part).setDented(deformetCheckBox.isSelected());
+            secondPane.getChildren().clear();
             pane.getChildren().remove(secondPane);
             pane.getChildren().forEach(node -> {
                 node.setDisable(false);
             });
-            part.doValuation();
-            System.out.println(part.painting+part.workPrice+part.partPrice+" cały koszt");
-            System.out.println(part.painting+" materiał lakierniczy");
+            part.doValuation(car);
+            selectedParts.add(element);
+
         });
     }
 
-    public MoreDetails(String element, Pane pane,Car car) {
+    public void ChoiseWindow() {
+        switch (element) {
+            case "zderzak przedni":
+                part = new Bumper();
+                ((Bumper) part).setFront(true);
+                bumperDetail(pane);
+                break;
+            case "zderzak tylny":
+                part = new Bumper();
+                ((Bumper) part).setBack(true);
+                bumperDetail(pane);
+                break;
+            case "błotnik przedni prawy":
+                break;
+            case "błotnik przedni lewy":
+                break;
+
+        }
+    }
+
+    public MoreDetails(String element, Pane pane, Car car,List<String> select) {
         this.pane = pane;
         this.secondPane = new Pane();
         this.closeButton = new Button("X");
         this.okButton = new Button("ok");
         okButton.setLayoutY(180);
         closeButton.setLayoutX(480);
-        this.car=car;
-        switch (element) {
-            case "zderzak przedni":
-                bumperDetail(pane);
-
-        }
+        this.car = car;
+        this.element = element;
+        this.selectedParts=select;
     }
 
     public Parts getPart() {

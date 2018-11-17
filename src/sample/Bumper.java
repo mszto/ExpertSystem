@@ -9,10 +9,10 @@ public class Bumper extends Parts {
     private boolean isScrachet;
 
     @Override
-    void doValuation() {
+    void doValuation(Car car) {
         if (isBroken) {
             workPrice = (float) (1.5 * priceForOneManHour);
-            painting  = (float) (0.2 * paintingBase + 0.3 * literOfPaint);
+            painting = (float) (0.2 * paintingBase + 0.3 * literOfPaint);
         } else if (isScrachet() || isDented()) {
             if (isDented()) {
                 workPrice = 2 * priceForOneManHour;
@@ -24,6 +24,7 @@ public class Bumper extends Parts {
     }
 
     public Bumper() {
+        super();
         this.isBack = false;
         this.isBroken = false;
         this.isFront = false;
