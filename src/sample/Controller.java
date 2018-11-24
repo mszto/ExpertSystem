@@ -1,7 +1,6 @@
 package sample;
 
 
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,7 +9,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class Controller {
@@ -24,14 +25,12 @@ public class Controller {
     private ResultSet rs;
     private List<Button> buttonsCar;
     private List<Button> carModelsList;
-    private Button backButton, addElementButton;
+    private Button backButton, addElementButton,convert;
     private ComboBox carElementList;
     private CheckBox sedanCheckBox, kombiCheckBox, hatchbackCheckBox;
-    private List<String> brokenElemnts;
-    private Pane secondPane;
-    private List<Parts> listParts = new ArrayList<>();
     private Car car;
-    private List<String> selectedParts=new ArrayList<>();
+    private List<String> selectedParts = new ArrayList<>();
+    private Map<String,Parts> listPart=new HashMap<>();
 
     public void initialize() {
         year.setLayoutX(300);
@@ -43,16 +42,15 @@ public class Controller {
         addElementButton = new Button("Dodaj");
         addElementButton.setLayoutY(150);
     }
-    private boolean eqal(String x,String y){
-        return x.equals(y);
-    }
-    private boolean checkSelectedItems(String element){
-        for(int i=0;i<selectedParts.size();i++){
-            if(selectedParts.get(i).equals(element))
+
+    private boolean checkSelectedItems(String element) {
+        for (int i = 0; i < selectedParts.size(); i++) {
+            if (selectedParts.get(i).equals(element))
                 return true;
         }
         return false;
     }
+
     private void addElementListener() {
         if (addElementButton != null) {
 
@@ -61,9 +59,9 @@ public class Controller {
                 System.out.println(carElementList.getSelectionModel().getSelectedItem());
                 element = String.valueOf(carElementList.getSelectionModel().getSelectedItem());
                 element = element.toLowerCase();
-                if(checkSelectedItems(element)){
-                    System.out.println(element+" został już wybrany");
-                }else {
+                if (checkSelectedItems(element)) {
+                    System.out.println(element + " został już wybrany");
+                } else {
 
                     if (sedanCheckBox.isSelected()) {
                         car.setType(sedanCheckBox.getText().toLowerCase());
@@ -72,7 +70,7 @@ public class Controller {
                     } else {
                         car.setType(kombiCheckBox.getText().toLowerCase());
                     }
-                    MoreDetails moreDetails = new MoreDetails(element, pane, car,selectedParts);
+                    MoreDetails moreDetails = new MoreDetails(element, pane, car, selectedParts, sedanCheckBox, hatchbackCheckBox, kombiCheckBox,listPart);
                     moreDetails.ChoiseWindow();
                 }
             });
@@ -188,17 +186,20 @@ public class Controller {
         for (Button button : carModelsList
                 ) {
             button.setOnAction(event -> {
-                Button back=new Button("Nowy pojazd");
+                Button back = new Button("Nowy pojazd");
 
-                Label labelCar=new Label(carMake.toUpperCase()+" "+button.getText().toUpperCase());
-                labelCar.setFont(new Font("Cambria",24));
+                Label labelCar = new Label(carMake.toUpperCase() + " " + button.getText().toUpperCase());
+                labelCar.setFont(new Font("Cambria", 24));
                 labelCar.setLayoutX(150);
-                 car = new Car(carMake, button.getText().toLowerCase(), year.getText());
+                car = new Car(carMake, button.getText().toLowerCase(), year.getText());
 
                 sedanCheckBox = new CheckBox("sedan");
                 hatchbackCheckBox = new CheckBox("hatchback");
                 kombiCheckBox = new CheckBox("kombi");
-
+                convert=new Button("Przelicz");
+                convert.setLayoutY(150);
+                convert.setLayoutX(500);
+                convert.setPrefSize(200,100);
                 sedanCheckBox.setSelected(true);
                 sedanCheckBox.setLayoutY(50);
                 hatchbackCheckBox.setLayoutX(150);
@@ -216,13 +217,12 @@ public class Controller {
                 elementsList.addAll("Próg Prawy", "Próg Lewy", "Listwa Ozdobna Na Drzwiach Lewych", "Listwa Ozdobna na drzwiach Prawych", "Błotnik tylny lewy", "Błotnik tylny prawy");
                 elementsList.addAll("Lamapa tylna lewa", "Lampa tylna Prawa", "Zderzak Tylny", "Klapa Bagażnika", "Dach");
                 carElementList.setItems(elementsList);
-
-                pane.getChildren().addAll(carElementList, addElementButton, kombiCheckBox, hatchbackCheckBox, sedanCheckBox,labelCar,back);
+                pane.getChildren().addAll(carElementList, addElementButton, kombiCheckBox, hatchbackCheckBox, sedanCheckBox, labelCar, back,convert);
                 bodyTypeCheckBox();
                 addElementListener();
                 back.setOnAction(event1 -> {
                     pane.getChildren().clear();
-                    pane.getChildren().addAll(year, okButton,textLabel);
+                    pane.getChildren().addAll(year, okButton, textLabel);
                 });
             });
         }
@@ -255,8 +255,8 @@ public class Controller {
             rs = datebaseConnection.getData("Select car_make from cars where car_model_year=" + year.getText() + " group by car_make");
             addButtonsToScene("car_make", buttonsCar);
             carMakeScene();
-
         });
 
     }
+
 }
