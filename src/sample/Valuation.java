@@ -11,7 +11,7 @@ public class Valuation {
         if (bumper.isBroken()) {
             workPrice = (float) (1.5 * priceForOneManHour);
             painting = painting = (float) (0.2 * paintingBase + 0.3 * literOfPaint);
-        } else if (bumper.isScrachet() || bumper.isDented()) {
+        } else if (bumper.isScratched() || bumper.isDented()) {
             if (bumper.isDented()) {
                 workPrice = 2 * priceForOneManHour;
             } else {
