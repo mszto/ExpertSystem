@@ -15,7 +15,7 @@ public class MoreDetails {
     private Parts part;
     private Pane secondPane;
     private Pane pane;
-    private CheckBox scretchCheckBox, brokenCheckBox, deformetCheckBox, lessThanTwoHand, moreThanTwoHands;
+    private CheckBox scretchCheckBox, brokenCheckBox, deformetCheckBox, lessThanTwoHand, moreThanTwoHands, moreThanThreeHands;
     private Button closeButton, okButton;
     private Car car;
     private String element;
@@ -259,6 +259,16 @@ public class MoreDetails {
                 secondPane.getChildren().addAll(scretchCheckBox, brokenCheckBox, deformetCheckBox, closeButton, okButton);
                 pane.getChildren().add(secondPane);
                 getMoreDetails();
+                break;
+            case "przednie prawe":
+                part=new FrontDoor();
+                part.setIsRight(true);
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                deformetCheckBox.setText("wgniecione");
+                lessThanTwoHand.setText("mniejsze niż 1 dłoń");
+                moreThanTwoHands.setText("miedzy 1-3 dłonie");
+
                 break;
 
         }

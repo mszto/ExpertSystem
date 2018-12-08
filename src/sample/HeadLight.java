@@ -1,4 +1,8 @@
 package sample;
 
-public class HeadLight {
+public class HeadLight extends Parts {
+    @Override
+    void doValuation(Car car) {
+
+    }
 }

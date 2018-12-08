@@ -5,7 +5,7 @@ abstract public class Parts {
     final protected float literOfPaint = 160;
     final protected float paintingBase = 150;
     protected float painting, workPrice, partPrice;
-    protected boolean isFront, isBack, isDented, isBroken, isScratched, isLeft, isRight, lessThaTwoHeands, moreThanTwoHeands;
+    protected boolean isFront, isBack, isDented, isBroken, isScratched, isLeft, isRight, lessThaTwoHeands, moreThanTwoHeands, moreThanThreeHands;
 
     public boolean isScratched(boolean isScratech) {
         return isScratched;
@@ -136,5 +136,21 @@ abstract public class Parts {
 
     public void setMoreThanTwoHeands(boolean moreThanTwoHeands) {
         this.moreThanTwoHeands = moreThanTwoHeands;
+    }
+
+    public boolean isRight() {
+        return isRight;
+    }
+
+    public void setRight(boolean right) {
+        isRight = right;
+    }
+
+    public boolean isMoreThanThreeHands() {
+        return moreThanThreeHands;
+    }
+
+    public void setMoreThanThreeHands(boolean moreThanThreeHands) {
+        this.moreThanThreeHands = moreThanThreeHands;
     }
 }
