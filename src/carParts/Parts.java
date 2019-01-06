@@ -2,10 +2,10 @@ package carParts;
 
 abstract public class Parts {
     final protected float priceForOneManHour = 73;
-    final protected float literOfPaint = 160;
-    final protected float paintingBase = 150;
-    protected double painting;
-    protected double workPrice;
+    final protected float literOfPaint = 200;
+    final protected float paintingBase = 180;
+    protected float painting;
+    protected float workPrice;
     protected float partPrice;
     protected boolean isFront, isBack, isDented, isBroken, isScratched, isLeft, isRight, lessThaTwoHeands, moreThanTwoHeands, moreThanThreeHands;
 
@@ -44,19 +44,19 @@ abstract public class Parts {
         return paintingBase;
     }
 
-    public double getPainting() {
+    public Float getPainting() {
         return painting;
     }
 
-    public void setPainting(double painting) {
+    public void setPainting(Float painting) {
         this.painting = painting;
     }
 
-    public double getWorkPrice() {
+    public float getWorkPrice() {
         return workPrice;
     }
 
-    public void setWorkPrice(double workPrice) {
+    public void setWorkPrice(Float workPrice) {
         this.workPrice = workPrice;
     }
 

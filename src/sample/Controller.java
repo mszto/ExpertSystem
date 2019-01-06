@@ -45,6 +45,22 @@ public class Controller {
         addElementButton.setLayoutY(150);
     }
 
+    private void ConvertListener(){
+        convert.setOnAction(event -> {
+            float cout= (float) 0.0;
+            Sumary sumary=new Sumary();
+            sumary.setLayoutY(300);
+            pane.getChildren().add(sumary);
+            for (String part:selectedParts) {
+                Parts parts=listPart.get(part);
+                cout+=parts.getPainting()+parts.getWorkPrice()+parts.getPartPrice();
+                sumary.addPart(parts,part);
+                sumary.setY(sumary.getY()+50);
+            }
+            convert.setText(Double.toString(cout));
+        });
+    }
+
     private boolean checkSelectedItems(String element) {
         for (int i = 0; i < selectedParts.size(); i++) {
             if (selectedParts.get(i).equals(element))
@@ -84,16 +100,25 @@ public class Controller {
             hatchbackCheckBox.setSelected(false);
             kombiCheckBox.setSelected(false);
             sedanCheckBox.setSelected(newValue);
+            hatchbackCheckBox.setDisable(false);
+            kombiCheckBox.setDisable(false);
+            sedanCheckBox.setDisable(true);
         });
         hatchbackCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
             sedanCheckBox.setSelected(false);
             kombiCheckBox.setSelected(false);
             hatchbackCheckBox.setSelected(newValue);
+            hatchbackCheckBox.setDisable(true);
+            kombiCheckBox.setDisable(false);
+            sedanCheckBox.setDisable(false);
         });
         kombiCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
             sedanCheckBox.setSelected(false);
             hatchbackCheckBox.setSelected(false);
             kombiCheckBox.setSelected(newValue);
+            hatchbackCheckBox.setDisable(false);
+            kombiCheckBox.setDisable(true);
+            sedanCheckBox.setDisable(false);
         });
     }
 
@@ -214,10 +239,10 @@ public class Controller {
                 ObservableList<String> elementsList = FXCollections.observableArrayList();
                 pane.getChildren().clear();
 
-                elementsList.addAll("Błotnik Przedni Prawy", "Błotnik Przedni Lewy", "Zderzak Przedni", "Maska", "Lampa Przednia Lewa", "Lampa Przedmia Prawa");
+                elementsList.addAll("Błotnik Przedni Prawy", "Błotnik Przedni Lewy", "Zderzak Przedni", "Maska", "Lampa Przednia Lewa", "Lampa Przednia Prawa");
                 elementsList.addAll("Lusterko Lewe", "Lusterko Prawe", "Drzwi Przednie Prawe", "Drzwi Przednie Lewe", "Drzwi tylne Prawe", "Drzwi Tylne Lewe");
                 elementsList.addAll("Próg Prawy", "Próg Lewy", "Listwa Ozdobna Na Drzwiach Lewych", "Listwa Ozdobna na drzwiach Prawych", "Błotnik tylny lewy", "Błotnik tylny prawy");
-                elementsList.addAll("Lamapa tylna lewa", "Lampa tylna Prawa", "Zderzak Tylny", "Klapa Bagażnika", "Dach");
+                elementsList.addAll("Lampa tylna lewa", "Lampa tylna Prawa", "Zderzak Tylny", "Klapa Bagażnika", "Dach");
                 carElementList.setItems(elementsList);
                 pane.getChildren().addAll(carElementList, addElementButton, kombiCheckBox, hatchbackCheckBox, sedanCheckBox, labelCar, back,convert);
                 bodyTypeCheckBox();
@@ -225,7 +250,10 @@ public class Controller {
                 back.setOnAction(event1 -> {
                     pane.getChildren().clear();
                     pane.getChildren().addAll(year, okButton, textLabel);
+                    listPart.clear();
+                    selectedParts.clear();
                 });
+                ConvertListener();
             });
         }
     }
@@ -238,7 +266,13 @@ public class Controller {
         carMakeTextField.setStyle("-fx-background-repeat: no-repeat");
         carMakeTextField.setStyle("-fx-background-position: right 10 center");
         pane.getChildren().clear();
-        pane.getChildren().addAll(carMakeTextField);
+        Button back=new Button("Cofnij");
+        back.setLayoutX(250);
+        back.setOnAction(event1 -> {
+            pane.getChildren().clear();
+            pane.getChildren().addAll(year, okButton, textLabel);
+        });
+        pane.getChildren().addAll(carMakeTextField,back);
         rs = datebaseConnection.getData("Select car_make from cars where car_model_year=" + year.getText() + " group by car_make");
 
 
@@ -253,8 +287,10 @@ public class Controller {
 
         backButton.setOnAction(event2 -> {
             pane.getChildren().clear();
-            pane.getChildren().add(carMakeTextField);
+
             rs = datebaseConnection.getData("Select car_make from cars where car_model_year=" + year.getText() + " group by car_make");
+
+            pane.getChildren().addAll(carMakeTextField);
             addButtonsToScene("car_make", buttonsCar);
             carMakeScene();
         });

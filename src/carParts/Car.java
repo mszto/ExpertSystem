@@ -1,4 +1,4 @@
-package sample;
+package carParts;
 
 public class Car {
 

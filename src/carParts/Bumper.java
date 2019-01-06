@@ -5,7 +5,7 @@ public class Bumper extends Parts {
 
     @Override
     public void doValuation(Car car) {
-        painting=(0.67 * paintingBase) + (0.67 * literOfPaint);
+        painting= (float) ((0.67 * paintingBase) + (0.67 * literOfPaint));
         if (isBroken) {
             workPrice = (float) (1.5 * priceForOneManHour);
         } else if (isScratched || isDented) {

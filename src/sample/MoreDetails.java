@@ -387,7 +387,7 @@ public class MoreDetails {
                 break;
             case "drzwi przednie lewe":
                 part = new FrontDoor();
-                part.setIsRight(true);
+                part.setIsRight(false);
                 pane.getChildren().remove(secondPane);
                 scretchCheckBox.setText("porysowane");
                 deformetCheckBox.setText("wgniecione");
@@ -402,7 +402,7 @@ public class MoreDetails {
                 break;
             case "drzwi tylne lewe":
                 part = new FrontDoor();
-                part.setIsRight(true);
+                part.setIsRight(false);
                 pane.getChildren().remove(secondPane);
                 scretchCheckBox.setText("porysowane");
                 deformetCheckBox.setText("wgniecione");
@@ -419,6 +419,188 @@ public class MoreDetails {
             case "drzwi tylne prawe":
                 part = new FrontDoor();
                 part.setIsRight(true);
+                part.setBack(true);
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                deformetCheckBox.setText("wgniecione");
+                lessThanTwoHand.setText("mniejsze niż 1 dłoń");
+                moreThanTwoHands.setText("miedzy 1-3 dłonie");
+                moreThanThreeHands.setText("Więcej niż 3 dłonie");
+                closeDetails();
+                checkBoxSelectAndAddThree();
+                secondPane.getChildren().addAll(scretchCheckBox, deformetCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
+
+            case "błotnik tylny lewy":
+                part = new RearFender();
+                part.setIsRight(false);
+                part.setBack(true);
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                deformetCheckBox.setText("wgniecione");
+                brokenCheckBox.setText("rozerwany");
+                lessThanTwoHand.setText("mniejsze niż 1 dłoń");
+                moreThanTwoHands.setText("miedzy 1-3 dłonie");
+                moreThanThreeHands.setText("Więcej niż 3 dłonie");
+                closeDetails();
+                checkBoxSelectAndAddThree();
+                secondPane.getChildren().addAll(scretchCheckBox, deformetCheckBox,brokenCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
+            case "błotnik tylny prawy":
+                part = new RearFender();
+                part.setIsRight(true);
+                part.setBack(true);
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                deformetCheckBox.setText("wgniecione");
+                brokenCheckBox.setText("rozerwany");
+                lessThanTwoHand.setText("mniejsze niż 1 dłoń");
+                moreThanTwoHands.setText("miedzy 1-3 dłonie");
+                moreThanThreeHands.setText("Więcej niż 3 dłonie");
+                closeDetails();
+                checkBoxSelectAndAddThree();
+                secondPane.getChildren().addAll(scretchCheckBox, deformetCheckBox,brokenCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
+            case "maska":
+                part = new Hood();
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                deformetCheckBox.setText("wgniecione");
+                lessThanTwoHand.setText("mniejsze niż 1 dłoń");
+                moreThanTwoHands.setText("miedzy 1-3 dłonie");
+                moreThanThreeHands.setText("Więcej niż 3 dłonie");
+                closeDetails();
+                checkBoxSelectAndAddThree();
+                secondPane.getChildren().addAll(scretchCheckBox, deformetCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
+            case "dach":
+                part = new Roof();
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                deformetCheckBox.setText("wgniecione");
+                lessThanTwoHand.setText("mniejsze niż 1 dłoń");
+                moreThanTwoHands.setText("miedzy 1-3 dłonie");
+                moreThanThreeHands.setText("Więcej niż 3 dłonie");
+                closeDetails();
+                checkBoxSelectAndAddThree();
+                secondPane.getChildren().addAll(scretchCheckBox, deformetCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
+            case "klapa bagażnika":
+                part = new TailGate();
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                deformetCheckBox.setText("wgniecione");
+                lessThanTwoHand.setText("mniejsze niż 1 dłoń");
+                moreThanTwoHands.setText("miedzy 1-3 dłonie");
+                moreThanThreeHands.setText("Więcej niż 3 dłonie");
+                closeDetails();
+                checkBoxSelectAndAddThree();
+                secondPane.getChildren().addAll(scretchCheckBox, deformetCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
+            case "lusterko prawe":
+                part = new Mirror();
+                part.setIsRight(true);
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                brokenCheckBox.setText("Urwane/uszkodzona obudowa");
+                closeDetails();
+                checkBoxSelect();
+                secondPane.getChildren().addAll(scretchCheckBox, brokenCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
+            case "lusterko lewe":
+                part = new Mirror();
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                brokenCheckBox.setText("Urwane/uszkodzona obudowa");
+                closeDetails();
+                checkBoxSelect();
+                secondPane.getChildren().addAll(scretchCheckBox, brokenCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
+            case "lampa przednia prawa":
+                part = new HeadLight();
+                part.setIsRight(true);
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                brokenCheckBox.setText("Urwane/uszkodzona obudowa");
+                deformetCheckBox.setText("Pęknięte szkło");
+                closeDetails();
+                checkBoxSelect();
+                secondPane.getChildren().addAll(scretchCheckBox, deformetCheckBox,brokenCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
+            case "lampa przednia lewa":
+                part = new HeadLight();
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                brokenCheckBox.setText("Urwane/uszkodzona obudowa");
+                deformetCheckBox.setText("Pęknięte szkło");
+                closeDetails();
+                checkBoxSelect();
+                secondPane.getChildren().addAll(scretchCheckBox, deformetCheckBox,brokenCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
+            case "lampa tylna prawa":
+                part = new HeadLight();
+                part.setIsRight(true);
+                part.setBack(true);
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                brokenCheckBox.setText("Urwane/uszkodzona obudowa");
+                deformetCheckBox.setText("Pęknięte szkło");
+                closeDetails();
+                checkBoxSelect();
+                secondPane.getChildren().addAll(scretchCheckBox, deformetCheckBox,brokenCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
+            case "lampa tylna lewa":
+                part = new HeadLight();
+                part.setBack(true);
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                brokenCheckBox.setText("Urwane/uszkodzona obudowa");
+                deformetCheckBox.setText("Pęknięte szkło");
+                closeDetails();
+                checkBoxSelect();
+                secondPane.getChildren().addAll(scretchCheckBox, deformetCheckBox,brokenCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
+            case "próg prawy":
+                part = new Sill();
+                part.setIsRight(true);
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                deformetCheckBox.setText("wgniecione");
+                lessThanTwoHand.setText("mniejsze niż 1 dłoń");
+                moreThanTwoHands.setText("miedzy 1-3 dłonie");
+                moreThanThreeHands.setText("Więcej niż 3 dłonie");
+                closeDetails();
+                checkBoxSelectAndAddThree();
+                secondPane.getChildren().addAll(scretchCheckBox, deformetCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
+            case "próg lewy":
+                part = new Sill();
                 pane.getChildren().remove(secondPane);
                 scretchCheckBox.setText("porysowane");
                 deformetCheckBox.setText("wgniecione");
