@@ -1,11 +1,12 @@
 package sample;
 
+
+import carParts.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,8 @@ public class MoreDetails {
         lessThanTwoHand.setLayoutX(150);
         moreThanTwoHands.setLayoutX(150);
         moreThanTwoHands.setLayoutY(120);
+        moreThanThreeHands.setLayoutY(160);
+        moreThanThreeHands.setLayoutX(150);
         brokenCheckBox.setLayoutY(50);
         deformetCheckBox.setLayoutY(100);
         secondPane.setLayoutX(200);
@@ -69,16 +72,25 @@ public class MoreDetails {
             brokenCheckBox.setSelected(false);
             deformetCheckBox.setSelected(false);
             scretchCheckBox.setSelected(newValue);
+            deformetCheckBox.setDisable(false);
+            brokenCheckBox.setDisable(false);
+            scretchCheckBox.setDisable(true);
         });
         brokenCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
             scretchCheckBox.setSelected(false);
             deformetCheckBox.setSelected(false);
             brokenCheckBox.setSelected(newValue);
+            brokenCheckBox.setDisable(true);
+            deformetCheckBox.setDisable(false);
+            scretchCheckBox.setDisable(false);
         });
         deformetCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
             scretchCheckBox.setSelected(false);
             brokenCheckBox.setSelected(false);
             deformetCheckBox.setSelected(newValue);
+            deformetCheckBox.setDisable(true);
+            brokenCheckBox.setDisable(false);
+            scretchCheckBox.setDisable(false);
         });
     }
 
@@ -96,11 +108,49 @@ public class MoreDetails {
         });
     }
 
+    private void checkBoxSelect(CheckBox first, CheckBox second, CheckBox third) {
+        first.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            second.setSelected(false);
+            third.setSelected(false);
+            first.setSelected(newValue);
+            first.setDisable(true);
+            second.setDisable(false);
+            third.setDisable(false);
+            okButton.setDisable(false);
+        });
+
+        second.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            first.setSelected(false);
+            third.setSelected(false);
+            second.setSelected(newValue);
+            first.setDisable(false);
+            second.setDisable(true);
+            third.setDisable(false);
+            okButton.setDisable(false);
+        });
+
+        third.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            first.setSelected(false);
+            second.setSelected(false);
+            third.setSelected(newValue);
+            first.setDisable(false);
+            second.setDisable(false);
+            third.setDisable(true);
+            okButton.setDisable(false);
+        });
+    }
+
     private void checkBoxSelectAndMore() {
         scretchCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
             brokenCheckBox.setSelected(false);
             deformetCheckBox.setSelected(false);
             scretchCheckBox.setSelected(newValue);
+            lessThanTwoHand.setSelected(false);
+            moreThanThreeHands.setSelected(false);
+            moreThanTwoHands.setSelected(false);
+            deformetCheckBox.setDisable(false);
+            brokenCheckBox.setDisable(false);
+            scretchCheckBox.setDisable(true);
             secondPane.getChildren().removeAll(lessThanTwoHand, moreThanTwoHands);
             okButton.setDisable(false);
         });
@@ -108,6 +158,12 @@ public class MoreDetails {
             scretchCheckBox.setSelected(false);
             deformetCheckBox.setSelected(false);
             brokenCheckBox.setSelected(newValue);
+            lessThanTwoHand.setSelected(false);
+            moreThanThreeHands.setSelected(false);
+            moreThanTwoHands.setSelected(false);
+            brokenCheckBox.setDisable(true);
+            deformetCheckBox.setDisable(false);
+            scretchCheckBox.setDisable(false);
             secondPane.getChildren().removeAll(lessThanTwoHand, moreThanTwoHands);
             okButton.setDisable(false);
         });
@@ -115,11 +171,64 @@ public class MoreDetails {
             scretchCheckBox.setSelected(false);
             brokenCheckBox.setSelected(false);
             deformetCheckBox.setSelected(newValue);
+            deformetCheckBox.setDisable(true);
+            brokenCheckBox.setDisable(false);
+            scretchCheckBox.setDisable(false);
             secondPane.getChildren().addAll(lessThanTwoHand, moreThanTwoHands);
             checkBoxSelect(lessThanTwoHand, moreThanTwoHands);
         });
     }
 
+    private void disableDetailsDeformet(boolean value) {
+        lessThanTwoHand.setDisable(value);
+        moreThanTwoHands.setDisable(value);
+        moreThanThreeHands.setDisable(value);
+    }
+
+    private void checkBoxSelectAndAddThree() {
+        scretchCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            brokenCheckBox.setSelected(false);
+            deformetCheckBox.setSelected(false);
+            scretchCheckBox.setSelected(newValue);
+            lessThanTwoHand.setSelected(false);
+            moreThanThreeHands.setSelected(false);
+            moreThanTwoHands.setSelected(false);
+            deformetCheckBox.setDisable(false);
+            brokenCheckBox.setDisable(false);
+            scretchCheckBox.setDisable(true);
+            secondPane.getChildren().removeAll(lessThanTwoHand, moreThanTwoHands, moreThanThreeHands);
+            okButton.setDisable(false);
+        });
+        brokenCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            scretchCheckBox.setSelected(false);
+            deformetCheckBox.setSelected(false);
+            brokenCheckBox.setSelected(newValue);
+            lessThanTwoHand.setSelected(false);
+            moreThanThreeHands.setSelected(false);
+            moreThanTwoHands.setSelected(false);
+            brokenCheckBox.setDisable(true);
+            deformetCheckBox.setDisable(false);
+            scretchCheckBox.setDisable(false);
+            secondPane.getChildren().removeAll(lessThanTwoHand, moreThanTwoHands, moreThanThreeHands);
+            okButton.setDisable(false);
+        });
+        deformetCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            secondPane.getChildren().removeAll(lessThanTwoHand, moreThanTwoHands, moreThanThreeHands);
+            scretchCheckBox.setSelected(false);
+            brokenCheckBox.setSelected(false);
+
+
+            deformetCheckBox.setSelected(newValue);
+            deformetCheckBox.setDisable(true);
+            brokenCheckBox.setDisable(false);
+            scretchCheckBox.setDisable(false);
+            okButton.setDisable(true);
+
+            secondPane.getChildren().addAll(lessThanTwoHand, moreThanTwoHands, moreThanThreeHands);
+            checkBoxSelect(lessThanTwoHand, moreThanTwoHands, moreThanThreeHands);
+        });
+
+    }
 
     private void bumperDetail(Pane pane) {
         pane.getChildren().remove(secondPane);
@@ -189,6 +298,7 @@ public class MoreDetails {
             part.setScratch(scretchCheckBox.isSelected());
             part.setLessThaTwoHeands(lessThanTwoHand.isSelected());
             part.setMoreThanTwoHeands(moreThanTwoHands.isSelected());
+            part.setMoreThanThreeHands(moreThanThreeHands.isSelected());
             secondPane.getChildren().clear();
             pane.getChildren().remove(secondPane);
             pane.getChildren().forEach(node -> {
@@ -260,17 +370,67 @@ public class MoreDetails {
                 pane.getChildren().add(secondPane);
                 getMoreDetails();
                 break;
-            case "przednie prawe":
-                part=new FrontDoor();
+            case "drzwi przednie prawe":
+                part = new FrontDoor();
                 part.setIsRight(true);
                 pane.getChildren().remove(secondPane);
                 scretchCheckBox.setText("porysowane");
                 deformetCheckBox.setText("wgniecione");
                 lessThanTwoHand.setText("mniejsze niż 1 dłoń");
                 moreThanTwoHands.setText("miedzy 1-3 dłonie");
-
+                moreThanThreeHands.setText("Więcej niż 3 dłonie");
+                closeDetails();
+                checkBoxSelectAndAddThree();
+                secondPane.getChildren().addAll(scretchCheckBox, deformetCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
+            case "drzwi przednie lewe":
+                part = new FrontDoor();
+                part.setIsRight(true);
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                deformetCheckBox.setText("wgniecione");
+                lessThanTwoHand.setText("mniejsze niż 1 dłoń");
+                moreThanTwoHands.setText("miedzy 1-3 dłonie");
+                moreThanThreeHands.setText("Więcej niż 3 dłonie");
+                closeDetails();
+                checkBoxSelectAndAddThree();
+                secondPane.getChildren().addAll(scretchCheckBox, deformetCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
+            case "drzwi tylne lewe":
+                part = new FrontDoor();
+                part.setIsRight(true);
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                deformetCheckBox.setText("wgniecione");
+                lessThanTwoHand.setText("mniejsze niż 1 dłoń");
+                moreThanTwoHands.setText("miedzy 1-3 dłonie");
+                moreThanThreeHands.setText("Więcej niż 3 dłonie");
+                closeDetails();
+                checkBoxSelectAndAddThree();
+                secondPane.getChildren().addAll(scretchCheckBox, deformetCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
                 break;
 
+            case "drzwi tylne prawe":
+                part = new FrontDoor();
+                part.setIsRight(true);
+                pane.getChildren().remove(secondPane);
+                scretchCheckBox.setText("porysowane");
+                deformetCheckBox.setText("wgniecione");
+                lessThanTwoHand.setText("mniejsze niż 1 dłoń");
+                moreThanTwoHands.setText("miedzy 1-3 dłonie");
+                moreThanThreeHands.setText("Więcej niż 3 dłonie");
+                closeDetails();
+                checkBoxSelectAndAddThree();
+                secondPane.getChildren().addAll(scretchCheckBox, deformetCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
+                getMoreDetails();
+                break;
         }
     }
 
@@ -289,11 +449,12 @@ public class MoreDetails {
         this.kombi = kombi;
         this.listPart = listP;
 
-        this.brokenCheckBox= new CheckBox();
-        this.deformetCheckBox= new CheckBox();
+        this.brokenCheckBox = new CheckBox();
+        this.deformetCheckBox = new CheckBox();
         this.scretchCheckBox = new CheckBox();
-        this.lessThanTwoHand= new CheckBox();
-        this.moreThanTwoHands= new CheckBox();
+        this.lessThanTwoHand = new CheckBox();
+        this.moreThanTwoHands = new CheckBox();
+        this.moreThanThreeHands = new CheckBox();
 
         initialize();
 

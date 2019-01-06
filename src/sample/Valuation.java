@@ -1,5 +1,7 @@
 package sample;
 
+import carParts.Bumper;
+
 public class Valuation {
     final private int priceForOneManHour = 60;
     final private int literOfPaint = 160;

@@ -1,6 +1,8 @@
 package sample;
 
 
+import carParts.Car;
+import carParts.Parts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,7 +32,7 @@ public class Controller {
     private CheckBox sedanCheckBox, kombiCheckBox, hatchbackCheckBox;
     private Car car;
     private List<String> selectedParts = new ArrayList<>();
-    private Map<String,Parts> listPart=new HashMap<>();
+    private Map<String, Parts> listPart=new HashMap<>();
 
     public void initialize() {
         year.setLayoutX(300);

@@ -1,4 +1,4 @@
-package sample;
+package carParts;
 
 public class BackDoor extends Parts {
 
@@ -7,7 +7,7 @@ public class BackDoor extends Parts {
         super();
     }
     @Override
-    void doValuation(Car car) {
+   public void doValuation(Car car) {
 
     }
 
