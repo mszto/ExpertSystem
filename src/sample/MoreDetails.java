@@ -337,6 +337,7 @@ public class MoreDetails {
                 checkBoxSelect();
                 closeDetails();
                 secondPane.getChildren().addAll(scretchCheckBox, brokenCheckBox, deformetCheckBox, closeButton, okButton);
+                pane.getChildren().add(secondPane);
                 getMoreDetails();
                 break;
             case "błotnik przedni prawy":

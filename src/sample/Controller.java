@@ -29,9 +29,10 @@ public class Controller {
     private List<Button> carModelsList;
     private Button backButton, addElementButton,convert;
     private ComboBox carElementList;
+    private ListView<String> partsSelectedComboBox;
     private CheckBox sedanCheckBox, kombiCheckBox, hatchbackCheckBox;
     private Car car;
-    private List<String> selectedParts = new ArrayList<>();
+    private ObservableList<String> selectedParts = FXCollections.observableArrayList();
     private Map<String, Parts> listPart=new HashMap<>();
 
     public void initialize() {
@@ -42,7 +43,8 @@ public class Controller {
 
     public Controller() {
         addElementButton = new Button("Dodaj");
-        addElementButton.setLayoutY(150);
+        addElementButton.setLayoutY(170);
+
     }
 
     private void ConvertListener(){
@@ -233,18 +235,23 @@ public class Controller {
                 hatchbackCheckBox.setLayoutY(50);
                 kombiCheckBox.setLayoutX(300);
                 kombiCheckBox.setLayoutY(50);
-
+                partsSelectedComboBox=new ListView<>();
                 carElementList = new ComboBox();
-                carElementList.setLayoutY(100);
+                partsSelectedComboBox.setLayoutY(120);
+                partsSelectedComboBox.setLayoutX(300);
+                carElementList.setLayoutY(120);
+
                 ObservableList<String> elementsList = FXCollections.observableArrayList();
+
                 pane.getChildren().clear();
 
+                partsSelectedComboBox.setItems(selectedParts);
                 elementsList.addAll("Błotnik Przedni Prawy", "Błotnik Przedni Lewy", "Zderzak Przedni", "Maska", "Lampa Przednia Lewa", "Lampa Przednia Prawa");
                 elementsList.addAll("Lusterko Lewe", "Lusterko Prawe", "Drzwi Przednie Prawe", "Drzwi Przednie Lewe", "Drzwi tylne Prawe", "Drzwi Tylne Lewe");
                 elementsList.addAll("Próg Prawy", "Próg Lewy", "Listwa Ozdobna Na Drzwiach Lewych", "Listwa Ozdobna na drzwiach Prawych", "Błotnik tylny lewy", "Błotnik tylny prawy");
                 elementsList.addAll("Lampa tylna lewa", "Lampa tylna Prawa", "Zderzak Tylny", "Klapa Bagażnika", "Dach");
                 carElementList.setItems(elementsList);
-                pane.getChildren().addAll(carElementList, addElementButton, kombiCheckBox, hatchbackCheckBox, sedanCheckBox, labelCar, back,convert);
+                pane.getChildren().addAll(carElementList, addElementButton, kombiCheckBox, hatchbackCheckBox, sedanCheckBox, labelCar, back,convert,partsSelectedComboBox);
                 bodyTypeCheckBox();
                 addElementListener();
                 back.setOnAction(event1 -> {
@@ -293,6 +300,7 @@ public class Controller {
             pane.getChildren().addAll(carMakeTextField);
             addButtonsToScene("car_make", buttonsCar);
             carMakeScene();
+
         });
 
     }
