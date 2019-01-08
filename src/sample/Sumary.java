@@ -53,7 +53,7 @@ public class Sumary extends Pane {
 
     public void setY(int y) {
         if(y>=getHeight()){
-            setHeight(y+400);
+            setHeight(this.y+400);
         }
         this.y = y;
     }

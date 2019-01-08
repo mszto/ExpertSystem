@@ -60,7 +60,11 @@ public class Controller {
                 sumary.addPart(parts,part);
                 sumary.setY(sumary.getY()+50);
             }
-            convert.setText(Float.toString(cout)+" zł");
+
+            if(sumary.getHeight()+sumary.getLayoutY()>pane.getHeight()){
+                pane.setMinHeight(sumary.getHeight()+sumary.getLayoutY());
+            }
+            convert.setText(String.format("%.2f",cout)+" zł");
         });
     }
 
@@ -93,6 +97,7 @@ public class Controller {
                     }
                     MoreDetails moreDetails = new MoreDetails(element, pane, car, selectedParts, sedanCheckBox, hatchbackCheckBox, kombiCheckBox,listPart);
                     moreDetails.ChoiseWindow();
+                    deleteElementButton.setDisable(true);
                 }
             });
         }
@@ -276,6 +281,7 @@ public class Controller {
                     pane.getChildren().addAll(year, okButton, textLabel);
                     listPart.clear();
                     selectedParts.clear();
+                    pane.setMinHeight(600);
                 });
                 ConvertListener();
             });
