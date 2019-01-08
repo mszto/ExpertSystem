@@ -9,8 +9,8 @@
    <content>
       <Pane fx:id="pane" prefHeight="600.0" prefWidth="800.0">
          <children>
-            <Button fx:id="okButton" layoutX="410.0" layoutY="269.0" mnemonicParsing="false" onAction="#ActionOkYearCar" prefHeight="31.0" prefWidth="101.0" text="ok" />
-            <Label fx:id="textLabel" layoutX="361.0" layoutY="165.0" text="Podaj rok produkcji samochodu" />
+            <Button fx:id="okButton" layoutX="350.0" layoutY="269.0" mnemonicParsing="false" onAction="#ActionOkYearCar" prefHeight="31.0" prefWidth="101.0" text="ok" />
+            <Label fx:id="textLabel" layoutX="300.0" layoutY="165.0" text="Podaj rok produkcji samochodu" />
          </children>
       </Pane>
    </content>

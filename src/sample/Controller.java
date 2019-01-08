@@ -81,7 +81,6 @@ public class Controller {
 
             addElementButton.setOnAction(event -> {
                 String element;
-                System.out.println(carElementList.getSelectionModel().getSelectedItem());
                 element = String.valueOf(carElementList.getSelectionModel().getSelectedItem());
                 element = element.toLowerCase();
                 if (checkSelectedItems(element)) {
@@ -288,12 +287,12 @@ public class Controller {
         }
     }
 
+    //metoda odpowiada za wykonanie akcji po kliknieciu przyciusku ok po wybraniu roku
     public void ActionOkYearCar(ActionEvent event) {
         carMakeTextField = new TextField();
         datebaseConnection = DatebaseConnection.getInstance();
         buttonsCar = new ArrayList<>();
         labelCar=new Label("Wynierz markę samochodu:");
-        Label label2=new Label("Wybierz model pojazdu");
         carMakeTextField.setPromptText("Wyszukaj");
         pane.getChildren().clear();
         Button back=new Button("Wróć");
@@ -305,8 +304,9 @@ public class Controller {
             pane.getChildren().addAll(year, okButton, textLabel);
         });
         pane.getChildren().addAll(carMakeTextField,back,labelCar);
-        rs = datebaseConnection.getData("Select car_make from cars where car_model_year=" + year.getText() + " group by car_make");
-
+        if(!year.getText().isEmpty()){
+            rs = datebaseConnection.getData("Select car_make from cars where car_model_year=" + year.getText() + " group by car_make");
+        }
 
         addButtonsToScene("car_make", buttonsCar);
 
