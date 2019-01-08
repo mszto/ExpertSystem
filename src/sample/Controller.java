@@ -22,12 +22,13 @@ public class Controller {
     public Pane pane;
     public Button okButton;
     public Label textLabel;
+    private Label labelCar;
     private TextField carMakeTextField;
     private DatebaseConnection datebaseConnection;
     private ResultSet rs;
     private List<Button> buttonsCar;
     private List<Button> carModelsList;
-    private Button backButton, addElementButton,convert;
+    private Button backButton, addElementButton,convert,deleteElementButton;
     private ComboBox carElementList;
     private ListView<String> partsSelectedComboBox;
     private CheckBox sedanCheckBox, kombiCheckBox, hatchbackCheckBox;
@@ -59,7 +60,7 @@ public class Controller {
                 sumary.addPart(parts,part);
                 sumary.setY(sumary.getY()+50);
             }
-            convert.setText(Double.toString(cout));
+            convert.setText(Float.toString(cout)+" zł");
         });
     }
 
@@ -165,8 +166,8 @@ public class Controller {
                 ) {
             but.setOnAction(event1 -> {
                 pane.getChildren().clear();
-
-                pane.getChildren().add(backButton);
+                labelCar.setText("Wybierz model pojazdu");
+                pane.getChildren().addAll(backButton,labelCar);
                 rs = datebaseConnection.getData("Select car_model from cars where car_make='" + but.getText() + "' and car_model_year=" + year.getText());
 
                 carModelsList = new ArrayList<>();
@@ -189,7 +190,6 @@ public class Controller {
 
             if (car2.contains(car)) {
 
-                System.out.println(button.getText());
                 if (lastButton != null) {
                     if (i == 4) {
                         button.setLayoutX(10);
@@ -216,32 +216,48 @@ public class Controller {
                 ) {
             button.setOnAction(event -> {
                 Button back = new Button("Nowy pojazd");
-
+                deleteElementButton=new Button("Usuń element");
                 Label labelCar = new Label(carMake.toUpperCase() + " " + button.getText().toUpperCase());
-                labelCar.setFont(new Font("Cambria", 24));
-                labelCar.setLayoutX(150);
-                car = new Car(carMake, button.getText().toLowerCase(), year.getText());
-
+                Label label1=new Label("Wybrane części: ");
+                Label label2=new Label("Wybierz częścii z listy poniżej:");
                 sedanCheckBox = new CheckBox("sedan");
                 hatchbackCheckBox = new CheckBox("hatchback");
                 kombiCheckBox = new CheckBox("kombi");
                 convert=new Button("Przelicz");
-                convert.setLayoutY(150);
-                convert.setLayoutX(500);
+                car = new Car(carMake, button.getText().toLowerCase(), year.getText());
+                partsSelectedComboBox=new ListView<>();
+                carElementList = new ComboBox();
+                ObservableList<String> elementsList = FXCollections.observableArrayList();
+
+                label2.setLayoutY(90);
+                label1.setLayoutX(350);
+                label1.setLayoutY(90);
+                labelCar.setFont(new Font("Cambria", 24));
+                labelCar.setLayoutX(150);
+
+                convert.setLayoutY(250);
+                convert.setLayoutX(550);
                 convert.setPrefSize(200,100);
+
                 sedanCheckBox.setSelected(true);
+                sedanCheckBox.setDisable(true);
                 sedanCheckBox.setLayoutY(50);
+
                 hatchbackCheckBox.setLayoutX(150);
                 hatchbackCheckBox.setLayoutY(50);
                 kombiCheckBox.setLayoutX(300);
                 kombiCheckBox.setLayoutY(50);
-                partsSelectedComboBox=new ListView<>();
-                carElementList = new ComboBox();
-                partsSelectedComboBox.setLayoutY(120);
-                partsSelectedComboBox.setLayoutX(300);
-                carElementList.setLayoutY(120);
 
-                ObservableList<String> elementsList = FXCollections.observableArrayList();
+
+                partsSelectedComboBox.setLayoutY(120);
+                partsSelectedComboBox.setLayoutX(350);
+                partsSelectedComboBox.setMaxHeight(50);
+                carElementList.setLayoutY(120);
+                partsSelectedComboBox.setOnMouseClicked(event1 -> {deleteElementButton.setDisable(false);});
+
+                deleteElementButton.setLayoutY(120);
+                deleteElementButton.setLayoutX(600);
+                deleteElementButton.setDisable(true);
 
                 pane.getChildren().clear();
 
@@ -251,7 +267,8 @@ public class Controller {
                 elementsList.addAll("Próg Prawy", "Próg Lewy", "Listwa Ozdobna Na Drzwiach Lewych", "Listwa Ozdobna na drzwiach Prawych", "Błotnik tylny lewy", "Błotnik tylny prawy");
                 elementsList.addAll("Lampa tylna lewa", "Lampa tylna Prawa", "Zderzak Tylny", "Klapa Bagażnika", "Dach");
                 carElementList.setItems(elementsList);
-                pane.getChildren().addAll(carElementList, addElementButton, kombiCheckBox, hatchbackCheckBox, sedanCheckBox, labelCar, back,convert,partsSelectedComboBox);
+
+                pane.getChildren().addAll(carElementList, addElementButton, kombiCheckBox, hatchbackCheckBox, sedanCheckBox, labelCar, back,convert,partsSelectedComboBox,label2,label1,deleteElementButton);
                 bodyTypeCheckBox();
                 addElementListener();
                 back.setOnAction(event1 -> {
@@ -269,17 +286,19 @@ public class Controller {
         carMakeTextField = new TextField();
         datebaseConnection = DatebaseConnection.getInstance();
         buttonsCar = new ArrayList<>();
-        carMakeTextField.setStyle("-fx-background-image: url('/icons/search.png')");
-        carMakeTextField.setStyle("-fx-background-repeat: no-repeat");
-        carMakeTextField.setStyle("-fx-background-position: right 10 center");
+        labelCar=new Label("Wynierz markę samochodu:");
+        Label label2=new Label("Wybierz model pojazdu");
+        carMakeTextField.setPromptText("Wyszukaj");
         pane.getChildren().clear();
-        Button back=new Button("Cofnij");
+        Button back=new Button("Wróć");
         back.setLayoutX(250);
+        labelCar.setLayoutY(50);
+        labelCar.setLayoutX(300);
         back.setOnAction(event1 -> {
             pane.getChildren().clear();
             pane.getChildren().addAll(year, okButton, textLabel);
         });
-        pane.getChildren().addAll(carMakeTextField,back);
+        pane.getChildren().addAll(carMakeTextField,back,labelCar);
         rs = datebaseConnection.getData("Select car_make from cars where car_model_year=" + year.getText() + " group by car_make");
 
 
@@ -294,10 +313,10 @@ public class Controller {
 
         backButton.setOnAction(event2 -> {
             pane.getChildren().clear();
-
+            labelCar.setText("Wynierz markę samochodu:");
             rs = datebaseConnection.getData("Select car_make from cars where car_model_year=" + year.getText() + " group by car_make");
 
-            pane.getChildren().addAll(carMakeTextField);
+            pane.getChildren().addAll(carMakeTextField,back,labelCar);
             addButtonsToScene("car_make", buttonsCar);
             carMakeScene();
 

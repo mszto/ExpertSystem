@@ -179,12 +179,6 @@ public class MoreDetails {
         });
     }
 
-    private void disableDetailsDeformet(boolean value) {
-        lessThanTwoHand.setDisable(value);
-        moreThanTwoHands.setDisable(value);
-        moreThanThreeHands.setDisable(value);
-    }
-
     private void checkBoxSelectAndAddThree() {
         scretchCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
             brokenCheckBox.setSelected(false);
@@ -230,65 +224,7 @@ public class MoreDetails {
 
     }
 
-    private void bumperDetail(Pane pane) {
-        pane.getChildren().remove(secondPane);
-        scretchCheckBox.setText("prysowony");
-        brokenCheckBox.setText("urwany/rozcięty");
-        deformetCheckBox.setText("odkształcony");
-        checkBoxSelect();
-        closeDetails();
-        secondPane.getChildren().addAll(scretchCheckBox, brokenCheckBox, deformetCheckBox, closeButton, okButton);
-
-        okButton.setOnAction(event -> {
-            part.setBroken(brokenCheckBox.isSelected());
-            part.setScratched(scretchCheckBox.isSelected());
-            part.setDented(deformetCheckBox.isSelected());
-            secondPane.getChildren().clear();
-            pane.getChildren().remove(secondPane);
-            pane.getChildren().forEach(node -> {
-                node.setDisable(false);
-            });
-            disabeldType();
-            part.doValuation(car);
-            listPart.put(element, part);
-            selectedParts.add(element);
-
-        });
-    }
-
-    private void frontFenderDetail() {
-        okButton.setDisable(true);
-        pane.getChildren().remove(secondPane);
-        scretchCheckBox.setText("prysowony");
-        brokenCheckBox.setText("urwany/rozcięty");
-        deformetCheckBox.setText("wgnieciony");
-        lessThanTwoHand.setText("mniejsze niż 2 dłonie");
-        moreThanTwoHands.setText("większe niż 2 dłonie");
-        initialize();
-        checkBoxSelectAndMore();
-        closeDetails();
-        secondPane.getChildren().addAll(scretchCheckBox, brokenCheckBox, deformetCheckBox, closeButton, okButton);
-
-        okButton.setOnAction(event -> {
-            part.setScratch(scretchCheckBox.isSelected());
-            part.setDented(deformetCheckBox.isSelected());
-            part.setBroken(brokenCheckBox.isSelected());
-            part.setScratch(scretchCheckBox.isSelected());
-            part.setLessThaTwoHeands(lessThanTwoHand.isSelected());
-            part.setMoreThanTwoHeands(moreThanTwoHands.isSelected());
-            secondPane.getChildren().clear();
-            pane.getChildren().remove(secondPane);
-            pane.getChildren().forEach(node -> {
-                node.setDisable(false);
-            });
-            disabeldType();
-            part.doValuation(car);
-            listPart.put(element, part);
-            selectedParts.add(element);
-
-        });
-    }
-
+    //metoda odpowiada za wywołanie akcji w przyciusku ok, dodaje wartości w checkboxach jako true i następnie oblicza wywołuje doValuation w obiekcie part
     private void getMoreDetails() {
 
         okButton.setOnAction(event -> {
