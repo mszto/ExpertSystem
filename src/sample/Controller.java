@@ -1,6 +1,8 @@
 package sample;
 
 
+import Datebase.CarsBase;
+import Datebase.*;
 import carParts.Car;
 import carParts.Parts;
 import javafx.collections.FXCollections;
@@ -9,11 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 
 public class Controller {
@@ -24,8 +23,7 @@ public class Controller {
     public Label textLabel;
     private Label labelCar;
     private TextField carMakeTextField;
-    private DatebaseConnection datebaseConnection;
-    private ResultSet rs;
+    private List<Car> rs;
     private List<Button> buttonsCar;
     private List<Button> carModelsList;
     private Button backButton, addElementButton,convert,deleteElementButton;
@@ -36,7 +34,7 @@ public class Controller {
     private Sumary sumary;
     private ObservableList<String> selectedParts = FXCollections.observableArrayList();
     private Map<String, Parts> listPart=new HashMap<>();
-
+    private CarsBase carsBase;
     public void initialize() {
         year.setLayoutX(300);
         year.setLayoutY(200);
@@ -47,6 +45,8 @@ public class Controller {
     public Controller() {
         addElementButton = new Button("Dodaj");
         addElementButton.setLayoutY(170);
+
+        carsBase=new CsvReader().czytaj();
     }
 
     private void deleteElementButtonListener(){
@@ -147,9 +147,14 @@ public class Controller {
                 int i = 0;
                 int prefsize = 200;
 
-                while (rs.next()) {
+                for(Car car:rs) {
                     i += 1;
-                    Button button = new Button(rs.getString(columnLabel));
+                    Button button=new Button();
+                    if(columnLabel.equals("car_make")) {
+                        button.setText(car.getCarMake());
+                    }else{
+                        button.setText(car.getCarModel());
+                    }
                     button.setMinSize(200, 70);
                     button.setLayoutX(x);
                     button.setLayoutY(y);
@@ -181,7 +186,7 @@ public class Controller {
                 pane.getChildren().clear();
                 labelCar.setText("Wybierz model pojazdu");
                 pane.getChildren().addAll(backButton,labelCar);
-                rs = datebaseConnection.getData("Select car_model from cars where car_make='" + but.getText() + "' and car_model_year=" + year.getText());
+                rs = carsBase.getCars(year.getText(),but.getText());
 
                 carModelsList = new ArrayList<>();
 
@@ -300,7 +305,6 @@ public class Controller {
     //metoda odpowiada za wykonanie akcji po kliknieciu przyciusku ok po wybraniu roku
     public void ActionOkYearCar(ActionEvent event) {
         carMakeTextField = new TextField();
-        datebaseConnection = DatebaseConnection.getInstance();
         buttonsCar = new ArrayList<>();
         labelCar=new Label("Wynierz markę samochodu:");
         carMakeTextField.setPromptText("Wyszukaj");
@@ -314,8 +318,9 @@ public class Controller {
             pane.getChildren().addAll(year, okButton, textLabel);
         });
         pane.getChildren().addAll(carMakeTextField,back,labelCar);
+
         if(!year.getText().isEmpty()){
-            rs = datebaseConnection.getData("Select car_make from cars where car_model_year=" + year.getText() + " group by car_make");
+            rs = carsBase.getCars(year.getText());
         }
 
         addButtonsToScene("car_make", buttonsCar);
@@ -325,13 +330,14 @@ public class Controller {
         });
 
         backButton = new Button("Wróć");
+        CsvReader csvReader=new CsvReader();
+        csvReader.czytaj();
         carMakeScene();
 
         backButton.setOnAction(event2 -> {
             pane.getChildren().clear();
             labelCar.setText("Wynierz markę samochodu:");
-            rs = datebaseConnection.getData("Select car_make from cars where car_model_year=" + year.getText() + " group by car_make");
-
+            rs = carsBase.getCars(year.getText());
             pane.getChildren().addAll(carMakeTextField,back,labelCar);
             addButtonsToScene("car_make", buttonsCar);
             carMakeScene();
