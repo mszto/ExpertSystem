@@ -33,6 +33,7 @@ public class Controller {
     private ListView<String> partsSelectedComboBox;
     private CheckBox sedanCheckBox, kombiCheckBox, hatchbackCheckBox;
     private Car car;
+    private Sumary sumary;
     private ObservableList<String> selectedParts = FXCollections.observableArrayList();
     private Map<String, Parts> listPart=new HashMap<>();
 
@@ -40,18 +41,26 @@ public class Controller {
         year.setLayoutX(300);
         year.setLayoutY(200);
         pane.getChildren().addAll(year);
+        this.sumary=new Sumary();
     }
 
     public Controller() {
         addElementButton = new Button("Dodaj");
         addElementButton.setLayoutY(170);
-
     }
 
+    private void deleteElementButtonListener(){
+        deleteElementButton.setOnAction(event -> {
+            String element=partsSelectedComboBox.getSelectionModel().getSelectedItem();
+            listPart.remove(element);
+            selectedParts.remove(element);
+        });
+    }
     private void ConvertListener(){
         convert.setOnAction(event -> {
             float cout= (float) 0.0;
-            Sumary sumary=new Sumary();
+            pane.getChildren().remove(sumary);
+            sumary=new Sumary();
             sumary.setLayoutY(300);
             pane.getChildren().add(sumary);
             for (String part:selectedParts) {
@@ -275,6 +284,7 @@ public class Controller {
                 pane.getChildren().addAll(carElementList, addElementButton, kombiCheckBox, hatchbackCheckBox, sedanCheckBox, labelCar, back,convert,partsSelectedComboBox,label2,label1,deleteElementButton);
                 bodyTypeCheckBox();
                 addElementListener();
+                deleteElementButtonListener();
                 back.setOnAction(event1 -> {
                     pane.getChildren().clear();
                     pane.getChildren().addAll(year, okButton, textLabel);
