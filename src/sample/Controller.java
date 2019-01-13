@@ -93,7 +93,12 @@ public class Controller {
                 element = String.valueOf(carElementList.getSelectionModel().getSelectedItem());
                 element = element.toLowerCase();
                 if (checkSelectedItems(element)) {
-                    System.out.println(element + " został już wybrany");
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning Dialog");
+                    alert.setHeaderText(element+" został już wybrany!");
+                    alert.setContentText("Wybierz inną część");
+
+                    alert.showAndWait();
                 } else {
 
                     if (sedanCheckBox.isSelected()) {
