@@ -8,15 +8,20 @@ public class Car {
     private String carModel;
     private String carModelYear;
     private String Type;
+    private String id;
 
     public Car(){
 
     }
 
     public Car(String carMake, String carModel, String carYear){
+        this("0",carMake,carModel,carYear);
+    }
+    public Car(String id,String carMake, String carModel, String carYear){
         this.carMake=carMake;
         this.carModel=carModel;
         this.carModelYear=carYear;
+        this.id=id;
     }
     public String getCarMake() {
         return carMake;
@@ -54,6 +59,13 @@ public class Car {
         }
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @Override
     public boolean equals(Object o) {

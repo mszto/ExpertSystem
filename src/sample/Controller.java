@@ -46,7 +46,7 @@ public class Controller {
         addElementButton = new Button("Dodaj");
         addElementButton.setLayoutY(170);
 
-        carsBase=new CsvReader().czytaj();
+        carsBase=new CsvReader().getCars();
     }
 
     private void deleteElementButtonListener(){
@@ -242,7 +242,7 @@ public class Controller {
                 hatchbackCheckBox = new CheckBox("hatchback");
                 kombiCheckBox = new CheckBox("kombi");
                 convert=new Button("Przelicz");
-                car = new Car(carMake, button.getText().toLowerCase(), year.getText());
+                car = rs.stream().filter(car1 -> {return car1.getCarModel().equals(button.getText());}).findAny().get();
                 partsSelectedComboBox=new ListView<>();
                 carElementList = new ComboBox();
                 ObservableList<String> elementsList = FXCollections.observableArrayList();
@@ -282,7 +282,7 @@ public class Controller {
                 partsSelectedComboBox.setItems(selectedParts);
                 elementsList.addAll("Błotnik Przedni Prawy", "Błotnik Przedni Lewy", "Zderzak Przedni", "Maska", "Lampa Przednia Lewa", "Lampa Przednia Prawa");
                 elementsList.addAll("Lusterko Lewe", "Lusterko Prawe", "Drzwi Przednie Prawe", "Drzwi Przednie Lewe", "Drzwi tylne Prawe", "Drzwi Tylne Lewe");
-                elementsList.addAll("Próg Prawy", "Próg Lewy", "Listwa Ozdobna Na Drzwiach Lewych", "Listwa Ozdobna na drzwiach Prawych", "Błotnik tylny lewy", "Błotnik tylny prawy");
+                elementsList.addAll("Próg Prawy", "Próg Lewy", "Błotnik tylny lewy", "Błotnik tylny prawy");
                 elementsList.addAll("Lampa tylna lewa", "Lampa tylna Prawa", "Zderzak Tylny", "Klapa Bagażnika", "Dach");
                 carElementList.setItems(elementsList);
 
@@ -330,8 +330,6 @@ public class Controller {
         });
 
         backButton = new Button("Wróć");
-        CsvReader csvReader=new CsvReader();
-        csvReader.czytaj();
         carMakeScene();
 
         backButton.setOnAction(event2 -> {
